@@ -3,18 +3,22 @@
 Accounts.oauth.registerService('office365');
 
 if (Meteor.isClient) {
-  const loginWithOffice365 = function(options, callback) {
-    if (! callback && typeof options === 'function') {
+  const loginWithOffice365 = function (options, callback) {
+    if (!callback && typeof options === 'function') {
       callback = options;
       options = null;
     }
+
+    options = { ...options };
+    options.loginUrlParameters = { ...options.loginUrlParameters };
+    options.loginUrlParameters.prompt = 'login';
 
     Office365.requestCredential(options, Accounts.oauth.credentialRequestCompleteHandler(callback));
   };
 
   Accounts.registerClientLoginFunction('office365', loginWithOffice365);
 
-  Meteor.loginWithOffice365 = function() {
+  Meteor.loginWithOffice365 = function () {
     return Accounts.applyLoginFunction('office365', arguments);
   };
 } else {
