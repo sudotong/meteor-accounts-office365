@@ -9,7 +9,7 @@ if (Meteor.isClient) {
       options = null;
     }
 
-    options = { ...options };
+    options = { referral: Session.get('referral'), ...options };
     options.loginUrlParameters = { ...options.loginUrlParameters };
     options.loginUrlParameters.prompt = 'login';
 
